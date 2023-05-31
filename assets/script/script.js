@@ -6,7 +6,7 @@ var searchPlatform = '';
 
 
 function getData() {
-    if (searchPlatform === '-- Select a Platform --' || searchParam === '') {
+    if (searchPlatform === '-- Select a Platform --' || searchParam === '' || searchParam === '-- Select a Class --') {
         clearResults();
         return;
     }
