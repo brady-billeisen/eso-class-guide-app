@@ -4,16 +4,19 @@ var subreddit = 'elderscrollsonline';
 var searchParam = '';
 
 
-
-
 function getRedditData() {
-    var redditUrl = `https://www.reddit.com/r/${subreddit}/search.json?q=${searchParam}&restrict_sr=1`;
+    if (searchParam === '-- Select a Class --') {
+        return;
+    }
+    var redditUrl = `https://www.reddit.com/r/${subreddit}/search.json?q=${searchParam}&restrict_sr=1&sort=top&limit=25`;
     fetch(redditUrl)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
             console.log(data);
+            var resultsHead = $('<h2>').text('Top results for ' + searchParam + ':');
+            $('#results').append(resultsHead);
             for (var i = 0; i < data.data.children.length; i++) {
                 var card = $('<div>').addClass('card mb-3');
                 var cardBody = $('<div>').addClass('card-body');
@@ -26,13 +29,12 @@ function getRedditData() {
                 anchor.append(title);
                 $('#results').append(card);
             }
-            // create div with class="card mb-3"
-            // create div with class="card-body"
-            // create anchor tag (append to card-body)
-            // create h2 for the title (append to anchor tag)
-            // create img tag for thumbnail (append to card-body)
-            // create p tag for the description (append to card-body)
         });
+}
+
+
+function clearResults() {
+    $('#results').empty();
 }
 
 
@@ -41,8 +43,10 @@ function setParam(param) {
     getRedditData();
 }
 
-$('#guide').change(function (event) {
+
+$('#eso-class').change(function (event) {
     event.preventDefault();
     var param = $(this).val();
+    clearResults();
     setParam(param);
 })
