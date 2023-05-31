@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>ESO Class Guides</title>
-    <link rel="stylesheet" href="./assets/css/style.css"> </link>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+</head>
 
-    <body>
-        <main class="container">
-            <header>
-                <p>Guide Selection</p>
-                <select id="guide" class="guide-select">
-                    <option value="" selected>-- Select a Guide --</option>
-                    <option value="reddit">Reddit Guides:</option>
-                    <option value="youtube">YouTube Guides:</option>
-                </select>
-            </header>
-            <h2 class="secondary-container">
+<body>
+    <main class="container">
+        <header>
+            <p>Guide Selection</p>
+            <select id="platform-guide" class="guide-select">
+                <option value="" selected>-- Select a Guide --</option>
+                <option value="reddit">Reddit Guides:</option>
+                <option value="youtube">YouTube Guides:</option>
+            </select>
+        </header>
+        <h2 class="secondary-container">
             <p>Classes Selector</p>
             <select id="guide" class="guide-select">
                 <option value="" selected>-- Select a Guide --</option>
@@ -29,8 +31,12 @@
                 <option value="necromancer">Necromancer</option>
                 <option value="arcanist">Arcanist</option>
             </select>
-            </h2>
+        </h2>
+        <div class="col-12 col-md-9 p-3" id="results"></div>
 
-            <link rel="script" href="./assets/script/script.js">
-        </main>
-    </body>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+        integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
+    <script rel="script" src="./assets/script/script.js"></script>
+</body>
