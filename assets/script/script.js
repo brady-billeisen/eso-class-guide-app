@@ -1,5 +1,4 @@
 var youtubeApiKey = 'AIzaSyD72xaN7Me4CqXheV39Q-OkMFk86DYRX90';
-
 var subreddit = 'elderscrollsonline';
 var searchParam = '';
 var searchPlatform = '';
@@ -20,8 +19,9 @@ function getData() {
             })
             .then(function (data) {
                 console.log(data);
-                var resultsHead = $('<h2>').text('Top results on Reddit for ' + searchParam + ':');
-                $('#results').append(resultsHead);
+                var resultsHead = $('<h2>').attr('id', 'resultsHead').text('Top results on Reddit for ' + '"' + searchParam + '"' + ' within r/' + subreddit + ':');
+                var grid = $('<div>').addClass('grid-container');
+                $('#results').prepend($('<div>').addClass('row').append($('<div>').addClass('col-12').append(resultsHead, grid)));
                 for (var i = 0; i < data.data.children.length; i++) {
                     var card = $('<div>').addClass('card mb-3');
                     var cardBody = $('<div>').addClass('card-body');
@@ -32,33 +32,36 @@ function getData() {
                     card.append(cardBody);
                     cardBody.append(anchor, thumbnail, author);
                     anchor.append(title);
-                    $('#results').append(card);
+                    $(grid).append(card);
                 }
             });
     } else if (searchPlatform === 'Youtube') {
-        var youtubeUrl = `https://www.googleapis.com/youtube/v3/search?key=${youtubeApiKey}&q=${'Elder Scrolls Online ' + searchParam}&maxResults=25&type=video`;
+        var youtubeUrl = `https://www.googleapis.com/youtube/v3/search?key=${youtubeApiKey}&q=${'Elder Scrolls Online ' + searchParam}&maxResults=25&videoSyndicated=true&videoEmbeddable=true&type=video&videoEmbeddable=true`;
         fetch(youtubeUrl)
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
                 console.log(data);
-                var resultsHead = $('<h2>').text('Top results on Youtube for "Elder Scrolls Online ' + searchParam + '"' + ':');
-                $('#results').append(resultsHead);
+                var resultsHead = $('<h2>').attr('id', 'resultsHead').text('Top results on Youtube for "Elder Scrolls Online ' + searchParam + '"' + ':');
+                var grid = $('<div>').addClass('grid-container');
+                $('#results').prepend($('<div>').addClass('row').append($('<div>').addClass('col-12').append(resultsHead, grid)));
                 for (var i = 0; i < data.items.length; i++) {
                     var card = $('<div>').addClass('card mb-3');
                     var cardBody = $('<div>').addClass('card-body');
+                    var iframeWrapper = $('<div>').addClass('video-wrapper');
                     var iframe = $('<iframe>').attr({
                         'src': 'https://www.youtube.com/embed/' + data.items[i].id.videoId,
                         'id': 'ytplayer',
                         'type': 'text/html',
                         'frameborder': '0',
-                        'width': '640',
-                        'height': '360'
+                        'width': '100%',
+                        'height': '100%'
                     });
                     card.append(cardBody);
-                    cardBody.append(iframe);
-                    $('#results').append(card);
+                    cardBody.append(iframeWrapper);
+                    iframeWrapper.append(iframe);
+                    $(grid).append(card);
                 }
             });
     }
@@ -95,4 +98,18 @@ $('#platform').change(function (event) {
     var platform = $(this).val();
     clearResults();
     setPlatform(platform);
+})
+
+
+
+$('.navbar').on('click', '.nav-link', function () {
+    $('.nav-item').removeClass('active');
+    $(this).parent().addClass('active');
+})
+
+
+$('.nav-link').each(function () {
+    if ($(this).attr('href') === document.location.hash) {
+        $(this).parent().addClass('active');
+    }
 })
