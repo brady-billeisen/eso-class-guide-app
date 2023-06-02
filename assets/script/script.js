@@ -27,12 +27,17 @@ function getData() {
                     var cardBody = $('<div>').addClass('card-body');
                     var anchor = $('<a>').attr('href', 'https://reddit.com' + data.data.children[i].data.permalink);
                     var title = $('<h2>').text(data.data.children[i].data.title);
-                    var thumbnail = $('<img>').attr('src', data.data.children[i].data.thumbnail);
                     var author = $('<p>').text('By: ' + data.data.children[i].data.author);
                     card.append(cardBody);
-                    cardBody.append(anchor, thumbnail, author);
+                    cardBody.append(anchor);
+                    if (/^https?/.test(data.data.children[i].data.thumbnail)) {
+                        var thumbnail = $('<img>').attr('src', data.data.children[i].data.thumbnail);
+                        cardBody.append(thumbnail);
+                        console.log(thumbnail[0].src)
+                    }
+                    cardBody.append(author);
                     anchor.append(title);
-                    $(grid).append(card);
+                    grid.append(card);
                 }
             });
     } else if (searchPlatform === 'Youtube') {
@@ -56,7 +61,8 @@ function getData() {
                         'type': 'text/html',
                         'frameborder': '0',
                         'width': '100%',
-                        'height': '100%'
+                        'height': '100%',
+                        'allowfullscreen': 'true'
                     });
                     card.append(cardBody);
                     cardBody.append(iframeWrapper);

@@ -105,7 +105,6 @@ body {
     text-align: var(--bs-body-text-align);
     background-color: var(--bs-body-bg);
     -webkit-text-size-adjust: 100%;
-    background-image: url(./assets/images/elder-scrolls-online.jpeg);
     -webkit-tap-highlight-color: transparent
 }
 
