@@ -20,21 +20,16 @@ function getData() {
             .then(function (data) {
                 console.log(data);
                 var resultsHead = $('<h2>').attr('id', 'resultsHead').text('Top results on Reddit for ' + '"' + searchParam + '"' + ' within r/' + subreddit + ':');
-                var grid = $('<div>').addClass('grid-container');
+                var grid = $('<div>').addClass('grid-container-reddit');
                 $('#results').prepend($('<div>').addClass('row').append($('<div>').addClass('col-12').append(resultsHead, grid)));
                 for (var i = 0; i < data.data.children.length; i++) {
                     var card = $('<div>').addClass('card mb-3');
                     var cardBody = $('<div>').addClass('card-body');
                     var anchor = $('<a>').attr('href', 'https://reddit.com' + data.data.children[i].data.permalink);
-                    var title = $('<h2>').text(data.data.children[i].data.title);
-                    var author = $('<p>').text('By: ' + data.data.children[i].data.author);
+                    var title = $('<h2>').attr('id', 'reddit-title').text(data.data.children[i].data.title);
+                    var author = $('<p>').attr('id', 'reddit-author').text('By: ' + data.data.children[i].data.author);
                     card.append(cardBody);
                     cardBody.append(anchor);
-                    if (/^https?/.test(data.data.children[i].data.thumbnail)) {
-                        var thumbnail = $('<img>').attr('src', data.data.children[i].data.thumbnail);
-                        cardBody.append(thumbnail);
-                        console.log(thumbnail[0].src)
-                    }
                     cardBody.append(author);
                     anchor.append(title);
                     grid.append(card);
@@ -49,7 +44,7 @@ function getData() {
             .then(function (data) {
                 console.log(data);
                 var resultsHead = $('<h2>').attr('id', 'resultsHead').text('Top results on Youtube for "Elder Scrolls Online ' + searchParam + '"' + ':');
-                var grid = $('<div>').addClass('grid-container');
+                var grid = $('<div>').addClass('grid-container-youtube');
                 $('#results').prepend($('<div>').addClass('row').append($('<div>').addClass('col-12').append(resultsHead, grid)));
                 for (var i = 0; i < data.items.length; i++) {
                     var card = $('<div>').addClass('card mb-3');
@@ -67,7 +62,7 @@ function getData() {
                     card.append(cardBody);
                     cardBody.append(iframeWrapper);
                     iframeWrapper.append(iframe);
-                    $(grid).append(card);
+                    grid.append(card);
                 }
             });
     }

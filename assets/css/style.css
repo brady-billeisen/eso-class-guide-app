@@ -73,8 +73,21 @@ a {
     opacity: 0.8;
 }
 
+.grid-container-reddit {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
 
-.grid-container {
+#reddit-title {
+    font-size: 16px !important;
+}
+
+#reddit-author {
+    margin-left: 11px;
+}
+
+.grid-container-youtube {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
