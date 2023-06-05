@@ -5,7 +5,7 @@ var searchPlatform = '';
 
 
 function getData() {
-    if (searchPlatform === '-- Select a Platform --' || searchParam === '' || searchParam === '-- Select a Class --') {
+    if (searchPlatform === '' || searchParam === '' || searchParam === 'null' || searchPlatform === 'null') {
         clearResults();
         return;
     }
@@ -47,7 +47,7 @@ function getData() {
                 var grid = $('<div>').addClass('grid-container-youtube');
                 $('#results').prepend($('<div>').addClass('row').append($('<div>').addClass('col-12').append(resultsHead, grid)));
                 for (var i = 0; i < data.items.length; i++) {
-                    $.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${data.items[i].id.videoId}&key=${youtubeApiKey}`, function(videoData) {
+                    $.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${data.items[i].id.videoId}&key=${youtubeApiKey}`, function (videoData) {
                         var card = $('<div>').addClass('card mb-3');
                         var cardBody = $('<div>').addClass('card-body');
                         var anchor = $('<a>').attr('href', 'https://www.youtube.com/watch?v=' + videoData.items[0].id);
@@ -72,10 +72,9 @@ function getData() {
                 }
             });
     }
+    localStorage.setItem('platform', searchPlatform || '');
+    localStorage.setItem('eso-class', searchParam || '');
 }
-
-
-
 
 function clearResults() {
     $('#results').empty();
@@ -84,13 +83,17 @@ function clearResults() {
 
 function setPlatform(platform) {
     searchPlatform = platform;
-    getData();
+    if (searchParam !== '' && searchPlatform !== '') {
+        getData();
+    }
 }
 
 
 function setParam(param) {
     searchParam = param;
-    getData();
+    if (searchParam !== '' && searchPlatform !== '') {
+        getData();
+    }
 }
 
 
@@ -122,3 +125,11 @@ $('.nav-link').each(function () {
         $(this).parent().addClass('active');
     }
 })
+searchParam = localStorage.getItem('eso-class') || '';
+searchPlatform = localStorage.getItem('platform') || '';
+
+if (searchParam && searchPlatform) {
+    $('#platform').val(searchPlatform);
+    $('#eso-class').val(searchParam);
+    getData();
+}
