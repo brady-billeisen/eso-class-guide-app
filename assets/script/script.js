@@ -47,26 +47,34 @@ function getData() {
                 var grid = $('<div>').addClass('grid-container-youtube');
                 $('#results').prepend($('<div>').addClass('row').append($('<div>').addClass('col-12').append(resultsHead, grid)));
                 for (var i = 0; i < data.items.length; i++) {
-                    var card = $('<div>').addClass('card mb-3');
-                    var cardBody = $('<div>').addClass('card-body');
-                    var iframeWrapper = $('<div>').addClass('video-wrapper');
-                    var iframe = $('<iframe>').attr({
-                        'src': 'https://www.youtube.com/embed/' + data.items[i].id.videoId,
-                        'id': 'ytplayer',
-                        'type': 'text/html',
-                        'frameborder': '0',
-                        'width': '100%',
-                        'height': '100%',
-                        'allowfullscreen': 'true'
+                    $.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${data.items[i].id.videoId}&key=${youtubeApiKey}`, function(videoData) {
+                        var card = $('<div>').addClass('card mb-3');
+                        var cardBody = $('<div>').addClass('card-body');
+                        var anchor = $('<a>').attr('href', 'https://www.youtube.com/watch?v=' + videoData.items[0].id);
+                        var title = $('<h2>').attr('id', 'yt-title').text(videoData.items[0].snippet.title);
+                        var iframeWrapper = $('<div>').addClass('video-wrapper');
+                        var iframe = $('<iframe>').attr({
+                            'src': 'https://www.youtube.com/embed/' + videoData.items[0].id,
+                            'id': 'ytplayer',
+                            'type': 'text/html',
+                            'frameborder': '0',
+                            'width': '100%',
+                            'height': '100%',
+                            'allowfullscreen': 'true'
+                        });
+                        card.append(cardBody);
+                        cardBody.append(iframeWrapper);
+                        cardBody.append(anchor);
+                        anchor.append(title);
+                        iframeWrapper.append(iframe);
+                        grid.append(card);
                     });
-                    card.append(cardBody);
-                    cardBody.append(iframeWrapper);
-                    iframeWrapper.append(iframe);
-                    grid.append(card);
                 }
             });
     }
 }
+
+
 
 
 function clearResults() {

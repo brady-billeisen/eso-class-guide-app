@@ -83,6 +83,11 @@ a {
     font-size: 16px !important;
 }
 
+#yt-title {
+    margin-top: 5px !important;
+    font-size: 16px !important;
+}
+
 #reddit-author {
     margin-left: 11px;
 }
