@@ -95,6 +95,15 @@ function setParam(param) {
 }
 
 
+$(document).ready(function() {
+    $('.collapse-navbar-collapse').hide();
+
+    $('.navbar-toggler').click(function() {
+        $('.collapse-navbar-collapse').toggle();
+    });
+});
+
+
 $('#eso-class').change(function (event) {
     event.preventDefault();
     var param = $(this).val();
