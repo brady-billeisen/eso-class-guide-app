@@ -18,7 +18,6 @@ function getData() {
                 return response.json();
             })
             .then(function (data) {
-                console.log(data);
                 var resultsHead = $('<h2>').attr('id', 'resultsHead').text('Top results on Reddit for ' + '"' + searchParam + '"' + ' within r/' + subreddit + ':');
                 var grid = $('<div>').addClass('grid-container-reddit');
                 $('#results').prepend($('<div>').addClass('row').append($('<div>').addClass('col-12').append(resultsHead, grid)));
@@ -42,7 +41,6 @@ function getData() {
                 return response.json();
             })
             .then(function (data) {
-                console.log(data);
                 var resultsHead = $('<h2>').attr('id', 'resultsHead').text('Top results on Youtube for "Elder Scrolls Online ' + searchParam + '"' + ':');
                 var grid = $('<div>').addClass('grid-container-youtube');
                 $('#results').prepend($('<div>').addClass('row').append($('<div>').addClass('col-12').append(resultsHead, grid)));

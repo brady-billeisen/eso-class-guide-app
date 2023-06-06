@@ -111,5 +111,16 @@ a {
 @media (max-width: 767px) {
     .card {
       flex-basis: 100%;
+      width: 100%;
+    }
+    .grid-container-reddit {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 10px;
+    }
+    .grid-container-youtube {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 10px;
     }
 }
